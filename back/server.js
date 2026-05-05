@@ -6,14 +6,13 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
+    origin: 'http://localhost:5173',
+    credentials: true
 }));
 app.use(express.json());
 
-// Проверка работы сервера
 app.get('/api/test', (req, res) => {
-  res.json({ message: 'Сервер работает!' });
+    res.json({ message: 'Сервер работает!' });
 });
 
 app.post('/api/register', (req, res) => {
@@ -22,10 +21,10 @@ app.post('/api/register', (req, res) => {
     db.query('SELECT * FROM user WHERE full_name = ?', [full_name], (err) => {
         if (err) {
             console.log('Ошибка БД:', err);
-            return res.status(500).json({ success: false});
+            return res.status(500).json({ success: false });
         }
 
-    const id_role = 1;
+        const id_role = 1;
 
         db.query(
             'INSERT INTO user (id_role, login, password, full_name, phone) VALUES (?, ?, ?, ?, ?)',
@@ -33,16 +32,37 @@ app.post('/api/register', (req, res) => {
             (err) => {
                 if (err) {
                     console.log('Ошибка при добавлении:', err);
-                    return res.status(500).json({ success: false});
+                    return res.status(500).json({ success: false });
                 }
-                
+
                 console.log('Пользователь зарегистрирован:', full_name);
-                res.json({ success: true});
+                res.json({ success: true });
             }
         );
     });
 });
 
+
+app.get('/api/login', (req, res) => {
+  const { login, password } = req.query;
+  
+  db.query(
+    'SELECT * FROM user WHERE login = ? AND password = ?',
+    [login, password],
+    (err, results) => {
+      if (err) {
+        return res.json({ success: false });
+      }
+      
+      if (results.length > 0) {
+        res.json({ success: true });
+      } else {
+        res.json({ success: false });
+      }
+    }
+  );
+});
+
 app.listen(PORT, () => {
-  console.log(`Сервер запущен на порту:${PORT}`);
+    console.log(`Сервер запущен на порту:${PORT}`);
 });
