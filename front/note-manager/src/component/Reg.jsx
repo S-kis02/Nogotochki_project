@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 export function Reg() {
   const navigate = useNavigate();
 
@@ -29,8 +28,16 @@ export function Reg() {
 
     const data = await response.json();
     if (data.success) {
-      alert('Регистрация успешна!');
-      navigate('/home')
+      
+      const loginRes = await fetch(`http://localhost:3000/api/login?login=${formData.login}&password=${formData.password}`)
+      const loginData = await loginRes.json()
+      
+      if (loginData.success) {
+        localStorage.setItem('userId', loginData.userId)
+        navigate('/home')
+      } else {
+        navigate('/avto')
+      }
     } else {
       alert('Ошибка: ' + data.message);
     }

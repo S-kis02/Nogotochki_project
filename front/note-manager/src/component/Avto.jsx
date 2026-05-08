@@ -13,8 +13,13 @@ export function Avto() {
     const data = await response.json()
     
     if (data.success) {
-      alert('Вы вошли!')
-      navigate('/home')
+      localStorage.setItem('userId', data.userId)
+      
+      if (data.id_role === 2) {
+        navigate('/admin')
+      } else {
+        navigate('/home')
+      }
     } else {
       alert('Неверный логин или пароль')
     }
