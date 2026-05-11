@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 export function Avto() {
   const navigate = useNavigate()
+  const [error, setError] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
     
     const login = e.target.login.value
     const password = e.target.password.value
@@ -21,7 +24,7 @@ export function Avto() {
         navigate('/home')
       }
     } else {
-      alert('Неверный логин или пароль')
+      setError('Неверный логин или пароль')
     }
   }
 
@@ -32,6 +35,7 @@ export function Avto() {
   return(
     <>
       <h1>Авторизация</h1>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <input type="text" name="login" placeholder="Логин"/>
         <input type="password" name="password" placeholder="Пароль"/>

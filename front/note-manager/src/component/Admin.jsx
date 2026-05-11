@@ -34,7 +34,6 @@ export function Admin() {
             <th>Дата</th>
             <th>Мастер</th>
             <th>Статус</th>
-            <th>Действие</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +43,6 @@ export function Admin() {
               <td>{r.phone}</td>
               <td>{new Date(r.booking_datetime).toLocaleString('ru-RU')}</td>
               <td>{r.master}</td>
-              <td>{r.status}</td>
               <td>
                 <select onChange={e => updateStatus(r.id, e.target.value)} defaultValue={r.id_status}>
                   <option value="1">Новое</option>

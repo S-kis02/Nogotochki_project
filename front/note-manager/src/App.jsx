@@ -9,19 +9,12 @@ import { Admin } from './component/Admin.jsx'
 
 export function App() {
   return (
-    <>
     <Routes>
-      <Route path='/' element={<Reg />}>
-      </Route>
-      <Route path='/avto' element={<Avto />}>
-      </Route>
-      <Route path='/home' element={<Home />}>
-      </Route>
-      <Route path='/new-request' element={<NewRequest />}>
-      </Route>
-      <Route path='/admin' element={<Admin />}>
-      </Route>
+      <Route path='/' element={<Reg />}/>
+      <Route path='/avto' element={<Avto />}/>
+      <Route path='/home' element={<Home />}/>
+      <Route path='/new-request' element={<NewRequest />}/>
+      <Route path='/admin' element={<Admin />}/>
     </Routes>
-    </>
   )
 }
