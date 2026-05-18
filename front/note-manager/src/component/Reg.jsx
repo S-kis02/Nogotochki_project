@@ -26,7 +26,7 @@ export function Reg() {
       setError('Введите ФИО')
       return
     }
-    
+
     if (!formData.phone || formData.phone.length < 10) {
       setError('Введите корректный телефон')
       return
@@ -36,7 +36,7 @@ export function Reg() {
       setError('Логин должен быть не менее 3 символов')
       return
     }
-    
+
     if (formData.password.length < 4) {
       setError('Пароль должен быть не менее 4 символов')
       return
@@ -50,10 +50,10 @@ export function Reg() {
 
     const data = await response.json();
     if (data.success) {
-      
+
       const loginRes = await fetch(`http://localhost:3000/api/login?login=${formData.login}&password=${formData.password}`)
       const loginData = await loginRes.json()
-      
+
       if (loginData.success) {
         localStorage.setItem('userId', loginData.userId)
         navigate('/home')
@@ -74,15 +74,15 @@ export function Reg() {
       <h1>Здравствуйте! Зарегистрируйтесь, чтобы продолжить</h1>
       <form onSubmit={handleSubmit}>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <input type="text" name="full_name" placeholder="ФИО" onChange={handleChange}/>
-        <input type="text" name="phone" placeholder="Номер телефона" onChange={handleChange}/>
-        <input type="text" name="login" placeholder="Логин" onChange={handleChange}/>
-        <input type="password" name="password" placeholder="Пароль" onChange={handleChange}/>
-        <button type="submit">Зарегистрироваться</button>
+        <input type="text" name="full_name" placeholder="ФИО" onChange={handleChange} />
+        <input type="text" name="phone" placeholder="Номер телефона" onChange={handleChange} />
+        <input type="text" name="login" placeholder="Логин" onChange={handleChange} />
+        <input type="password" name="password" placeholder="Пароль" onChange={handleChange} />
+        <button type="submit" className='btn'>Зарегистрироваться</button>
       </form>
 
       <p>Уже зарегистрированы?</p>
-      <button onClick={AvtoGo}>Авторизоваться</button>
+      <button onClick={AvtoGo} className='btn'>Авторизоваться</button>
     </>
   );
 }

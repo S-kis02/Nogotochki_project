@@ -6,9 +6,14 @@ export function Admin() {
   const [requests, setRequests] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/admin/requests')
-      .then(res => res.json())
-      .then(data => data.success && setRequests(data.data))
+    const fetchRequests = async () => {
+      const response = await fetch('http://localhost:3000/api/admin/requests')
+      const data = await response.json()
+      if (data.success) {
+        setRequests(data.data)
+      }
+    }
+    fetchRequests()
   }, [])
 
   const updateStatus = async (id, id_status) => {
@@ -17,14 +22,16 @@ export function Admin() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id_status })
     })
-    const res = await fetch('http://localhost:3000/api/admin/requests')
-    const data = await res.json()
-    data.success && setRequests(data.data)
+    const response = await fetch('http://localhost:3000/api/admin/requests')
+    const data = await response.json()
+    if (data.success) {
+      setRequests(data.data)
+    }
   }
 
   return (
     <>
-      <button onClick={() => navigate('/')}>Выход</button>
+      <button onClick={() => navigate('/')} className='btn'>Выход</button>
       <h1>Панель администратора</h1>
       <table border="1">
         <thead>

@@ -4,17 +4,18 @@ import { Routes, Route } from 'react-router-dom'
 import { Home } from './component/Home.jsx'
 import { NewRequest } from './component/NewRequest.jsx'
 import { Admin } from './component/Admin.jsx'
+import './App.css'
 
 // внутри Routes добавь:
 
 export function App() {
   return (
     <Routes>
-      <Route path='/' element={<Reg />}/>
-      <Route path='/avto' element={<Avto />}/>
-      <Route path='/home' element={<Home />}/>
-      <Route path='/new-request' element={<NewRequest />}/>
-      <Route path='/admin' element={<Admin />}/>
+      <Route path='/' element={<Reg />} />
+      <Route path='/avto' element={<Avto />} />
+      <Route path='/home' element={<Home />} />
+      <Route path='/new-request' element={<NewRequest />} />
+      <Route path='/admin' element={<Admin />} />
     </Routes>
   )
 }

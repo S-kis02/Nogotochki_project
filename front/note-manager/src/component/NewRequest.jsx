@@ -8,9 +8,14 @@ export function NewRequest() {
   const userId = localStorage.getItem('userId')
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/masters')
-      .then(res => res.json())
-      .then(data => data.success && setMasters(data.data))
+    const fetchMasters = async () => {
+      const response = await fetch('http://localhost:3000/api/masters')
+      const data = await response.json()
+      if (data.success) {
+        setMasters(data.data)
+      }
+    }
+    fetchMasters()
   }, [])
 
   const validateDateTime = (datetime) => {
@@ -59,13 +64,13 @@ export function NewRequest() {
       booking_datetime: datetime
     }
 
-    const res = await fetch('http://localhost:3000/api/requests', {
+    const response = await fetch('http://localhost:3000/api/requests', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newReq)
     })
 
-    const data = await res.json()
+    const data = await response.json()
     if (data.success) {
       navigate('/home')
     } else {
@@ -87,13 +92,13 @@ export function NewRequest() {
           ))}
         </select>
 
-        <input type="datetime-local" name="datetime" onChange={(e) => validateDateTime(e.target.value)}/>
+        <input type="datetime-local" name="datetime" onChange={(e) => validateDateTime(e.target.value)} />
         <p>Доступно время с 08:00 до 18:00</p>
 
-        <button type="submit">Создать</button>
+        <button type="submit" className='btn'>Создать</button>
       </form>
 
-      <button onClick={() => navigate('/home')}>Назад</button>
+      <button onClick={() => navigate('/home')} className='btn'>Назад</button>
     </>
   )
 }

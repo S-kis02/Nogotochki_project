@@ -7,11 +7,16 @@ export function Home() {
   const userId = localStorage.getItem('userId')
 
   useEffect(() => {
-    if (userId) {
-      fetch(`http://localhost:3000/api/requests?userId=${userId}`)
-        .then(res => res.json())
-        .then(data => data.success && setRequests(data.data))
+    const fetchRequests = async () => {
+      if (userId) {
+        const response = await fetch(`http://localhost:3000/api/requests?userId=${userId}`)
+        const data = await response.json()
+        if (data.success) {
+          setRequests(data.data)
+        }
+      }
     }
+    fetchRequests()
   }, [userId])
 
   const exit = () => {
@@ -21,7 +26,7 @@ export function Home() {
 
   return (
     <>
-      <button onClick={exit}>Выход</button>
+      <button onClick={exit} className='btn'>Выход</button>
       <h1>Мои заявки</h1>
       <table border="1">
         <thead>
@@ -37,7 +42,7 @@ export function Home() {
           ))}
         </tbody>
       </table>
-      <button onClick={() => navigate('/new-request')}>Заполнить заявку</button>
+      <button onClick={() => navigate('/new-request')} className='btn'>Заполнить заявку</button>
     </>
   )
 }
